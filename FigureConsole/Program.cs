@@ -11,7 +11,7 @@ internal class Program
 
         Console.WriteLine();
 
-        Triangle t = new Triangle(13d / 10, 5d / 10, 12d / 10);
+        Triangle t = new Triangle(3, 4, 5);
         string isRightStr = t.IsRightTriangle() ? "is Right" : "isnt right";
         Console.WriteLine($"Triangle {isRightStr}");
 

@@ -58,15 +58,23 @@ public sealed class Triangle : Figure
 
     public Triangle(double a, double b, double c)
     {
-        A = a;
-        B = b;
-        C = c;
+        ValidateTriangle(a, b, c);
+
+        _a = a;
+        _b = b;
+        _c = c;
     }
 
     private double GetSquare()
     {
         double semiperimeter = (_a + _b + _c) / 2;
         return Math.Sqrt(semiperimeter * (semiperimeter - _a) * (semiperimeter - _b) * (semiperimeter - _c));
+    }
+
+    private void ValidateTriangle(double a, double b, double c)
+    {
+        if (a + b <= c || b + c <= a || c + a <= b)
+            throw new ArgumentException("The sum of the lengths of any two sides of a triangle is greater than the length of the remaining side");
     }
 
     private void ValidateSide(double side)
