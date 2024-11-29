@@ -1,5 +1,7 @@
 ﻿namespace FigureLibrary;
 
+// Question: Так как не было указано какого типа стороны треугольника, использовал double.
+// Поэтому в функции проверки на прямоугольность треугольника, добавлена epsilone для сравнения double 
 public sealed class Triangle : Figure
 {
     private double _a;
@@ -11,7 +13,7 @@ public sealed class Triangle : Figure
         get => _a;
         set
         {
-            ValidateSide(value);
+            ValidateSides(value, B, C);
             _a = value;
         }
     }
@@ -21,7 +23,7 @@ public sealed class Triangle : Figure
         get => _b;
         set
         {
-            ValidateSide(value);
+            ValidateSides(value, A, C);
             _b = value;
         }
     }
@@ -31,7 +33,7 @@ public sealed class Triangle : Figure
         get => _c;
         set
         {
-            ValidateSide(value);
+            ValidateSides(value, A, B);
             _c = value;
         }
     }
@@ -58,7 +60,7 @@ public sealed class Triangle : Figure
 
     public Triangle(double a, double b, double c)
     {
-        ValidateTriangle(a, b, c);
+        ValidateSides(a, b, c);
 
         _a = a;
         _b = b;
@@ -71,15 +73,12 @@ public sealed class Triangle : Figure
         return Math.Sqrt(semiperimeter * (semiperimeter - _a) * (semiperimeter - _b) * (semiperimeter - _c));
     }
 
-    private void ValidateTriangle(double a, double b, double c)
+    private void ValidateSides(double a, double b, double c)
     {
+        if (a <= 0 || b <= 0 || c <= 0)
+            throw new ArgumentException("The triangle side must be positive");
+
         if (a + b <= c || b + c <= a || c + a <= b)
             throw new ArgumentException("The sum of the lengths of any two sides of a triangle is greater than the length of the remaining side");
-    }
-
-    private void ValidateSide(double side)
-    {
-        if (side <= 0)
-            throw new ArgumentException("The triangle side must be positive");
     }
 }
